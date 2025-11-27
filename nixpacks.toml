@@ -1,8 +1,0 @@
-[phases.setup]
-nixPkgs = ["python311"]
-
-[phases.install]
-cmds = ["pip install -r backend/requirements.txt"]
-
-[start]
-cmd = "cd backend && python manage.py migrate --noinput && python manage.py collectstatic --noinput && gunicorn task_analyzer.wsgi --bind 0.0.0.0:$PORT"
