@@ -26,7 +26,7 @@
 <div align="center">
 
 <!-- Replace with actual screenshot - you can add one later -->
-<img src="docs/demo-screenshot.png" alt="Smart Task Analyzer Demo" width="100%">
+<img src="docs/Screenshot 2025-11-28 001640.png" alt="Smart Task Analyzer Demo" width="100%">
 
 *_Add tasks, select a strategy, and get AI-powered prioritization recommendations_*
 
