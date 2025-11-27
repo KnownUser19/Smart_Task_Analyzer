@@ -21,14 +21,14 @@
 
 ## 🎬 Live Demo
 
-> **🌐 [View Live Demo on Railway](https://your-app-name.railway.app)**
+> **🌐 [View Live Demo on Railway](https://smarttaskanalyzer.up.railway.app/)**
 
 <div align="center">
 
 <!-- Replace with actual screenshot - you can add one later -->
 <img src="docs/demo-screenshot.png" alt="Smart Task Analyzer Demo" width="100%">
 
-*Add tasks, select a strategy, and get AI-powered prioritization recommendations*
+*_Add tasks, select a strategy, and get AI-powered prioritization recommendations_*
 
 </div>
 
@@ -71,28 +71,16 @@ The priority scoring algorithm balances multiple competing factors:
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                    PRIORITY SCORE FORMULA                        │
+│                    PRIORITY SCORE FORMULA                       │
 ├─────────────────────────────────────────────────────────────────┤
-│                                                                  │
+│                                                                 │
 │  Score = (Urgency × W₁) + (Importance × W₂) +                   │
-│          (Effort × W₃) + (Dependencies × W₄)                     │
-│                                                                  │
+│          (Effort × W₃) + (Dependencies × W₄)                    │
+│                                                                 │
 │  Where W₁ + W₂ + W₃ + W₄ = 100%                                 │
-│                                                                  │
+│                                                                 │
 └─────────────────────────────────────────────────────────────────┘
 ```
-
-### 📊 Strategy Weights
-
-| Strategy | Urgency | Importance | Effort | Dependencies |
-|:---------|:-------:|:----------:|:------:|:------------:|
-| 🎯 **Smart Balance** | 30% | 35% | 15% | 20% |
-| ⚡ **Fastest Wins** | 15% | 15% | 60% | 10% |
-| 💎 **High Impact** | 10% | 70% | 5% | 15% |
-| ⏰ **Deadline Driven** | 65% | 15% | 5% | 15% |
-
-<details>
-<summary>📈 <strong>Scoring Details</strong> (click to expand)</summary>
 
 ### Urgency Scoring
 ```
@@ -139,7 +127,7 @@ Blocks 4+:       100 (critical path)
 3. Click **"New Project"** → **"Deploy from GitHub repo"**
 4. Select this repository
 5. Railway auto-detects Django and deploys! ✨
-6. Get your free `.railway.app` subdomain 🎉
+6. Get your free `.railway.app` subdomain 
 
 **Environment Variables (optional):**
 ```
@@ -243,35 +231,6 @@ Local:      http://localhost:8000/api
 
 ---
 
-## 🏗️ Project Structure
-
-```
-task-analyzer/
-├── 📂 backend/
-│   ├── 📂 task_analyzer/     # Django project config
-│   │   ├── settings.py       # Configuration
-│   │   ├── urls.py           # URL routing
-│   │   └── wsgi.py           # WSGI application
-│   ├── 📂 tasks/             # Main app
-│   │   ├── scoring.py        # Priority algorithm
-│   │   ├── views.py          # API endpoints
-│   │   ├── serializers.py    # Data validation
-│   │   └── tests.py          # Unit tests
-│   ├── manage.py
-│   └── requirements.txt
-├── 📂 frontend/
-│   ├── index.html            # Main page
-│   ├── styles.css            # Dark theme styles
-│   └── script.js             # Application logic
-├── 📂 docs/                  # Screenshots & docs
-├── Procfile                  # Railway deployment
-├── railway.json              # Railway config
-├── nixpacks.toml             # Build config
-└── README.md
-```
-
----
-
 ## 🧪 Testing
 
 ```bash
@@ -312,18 +271,16 @@ python manage.py test tasks -v 2
 
 ---
 
-## 👤 Author
+## 👤 Author : Tarra Nikhitha
 
 **Software Development Intern Candidate**
 
-Built with ❤️ using Python, Django, and vanilla JavaScript.
+Built using Python, Django, and vanilla JavaScript.
 
 ---
 
 <div align="center">
 
 ### ⭐ Star this repo if you found it helpful!
-
-[![GitHub stars](https://img.shields.io/github/stars/YOUR_USERNAME/task-analyzer?style=social)](https://github.com/YOUR_USERNAME/task-analyzer)
 
 </div>
