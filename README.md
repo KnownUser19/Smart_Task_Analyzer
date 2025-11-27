@@ -273,8 +273,6 @@ python manage.py test tasks -v 2
 
 ## 👤 Author : Tarra Nikhitha
 
-**Software Development Intern Candidate**
-
 Built using Python, Django, and vanilla JavaScript.
 
 ---
