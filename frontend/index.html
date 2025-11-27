@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Task Analyzer | Intelligent Task Prioritization</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Animated background -->
+        <div class="bg-gradient"></div>
+        <div class="bg-noise"></div>
+        
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 11l3 3L22 4"/>
+                        <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
+                    </svg>
+                </div>
+                <span class="logo-text">TaskPriority<span class="logo-accent">AI</span></span>
+            </div>
+            <div class="header-badge">
+                <span class="badge-dot"></span>
+                Smart Analysis Engine
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Input Section -->
+            <section class="input-section">
+                <div class="section-header">
+                    <h2>Task Input</h2>
+                    <div class="input-toggle">
+                        <button class="toggle-btn active" data-mode="form">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="3" width="7" height="7"/>
+                                <rect x="14" y="3" width="7" height="7"/>
+                                <rect x="14" y="14" width="7" height="7"/>
+                                <rect x="3" y="14" width="7" height="7"/>
+                            </svg>
+                            Form
+                        </button>
+                        <button class="toggle-btn" data-mode="json">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="16,18 22,12 16,6"/>
+                                <polyline points="8,6 2,12 8,18"/>
+                            </svg>
+                            JSON
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Form Input Mode -->
+                <div class="input-mode" id="form-mode">
+                    <div class="task-form">
+                        <div class="form-row">
+                            <div class="form-group flex-2">
+                                <label for="task-title">Task Title</label>
+                                <input type="text" id="task-title" placeholder="e.g., Fix login authentication bug">
+                            </div>
+                            <div class="form-group">
+                                <label for="task-due">Due Date</label>
+                                <input type="date" id="task-due">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="task-hours">Est. Hours</label>
+                                <input type="number" id="task-hours" min="0.5" step="0.5" value="2" placeholder="2">
+                            </div>
+                            <div class="form-group">
+                                <label for="task-importance">Importance (1-10)</label>
+                                <div class="importance-slider">
+                                    <input type="range" id="task-importance" min="1" max="10" value="5">
+                                    <span class="importance-value" id="importance-display">5</span>
+                                </div>
+                            </div>
+                            <div class="form-group flex-2">
+                                <label for="task-dependencies">Dependencies (comma-separated IDs)</label>
+                                <input type="text" id="task-dependencies" placeholder="e.g., task_1, task_2">
+                            </div>
+                        </div>
+                        <button class="btn btn-secondary" id="add-task-btn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="12" y1="5" x2="12" y2="19"/>
+                                <line x1="5" y1="12" x2="19" y2="12"/>
+                            </svg>
+                            Add Task
+                        </button>
+                    </div>
+
+                    <!-- Task List -->
+                    <div class="task-list-container">
+                        <div class="task-list-header">
+                            <h3>Tasks to Analyze <span class="task-count" id="task-count">0</span></h3>
+                            <button class="btn btn-ghost" id="clear-tasks-btn">Clear All</button>
+                        </div>
+                        <div class="task-list" id="task-list">
+                            <div class="empty-state" id="empty-state">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                                </svg>
+                                <p>No tasks added yet</p>
+                                <span>Add tasks using the form above or paste JSON</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- JSON Input Mode -->
+                <div class="input-mode hidden" id="json-mode">
+                    <div class="json-input-container">
+                        <label for="json-input">Paste JSON Array of Tasks</label>
+                        <textarea id="json-input" placeholder='[
+  {
+    "title": "Fix login bug",
+    "due_date": "2025-01-15",
+    "estimated_hours": 3,
+    "importance": 8,
+    "dependencies": []
+  },
+  {
+    "title": "Update documentation",
+    "due_date": "2025-01-20",
+    "estimated_hours": 2,
+    "importance": 5,
+    "dependencies": ["task_0"]
+  }
+]'></textarea>
+                        <div class="json-actions">
+                            <button class="btn btn-secondary" id="load-sample-btn">Load Sample Data</button>
+                            <button class="btn btn-secondary" id="parse-json-btn">Parse JSON</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Strategy Selection -->
+            <section class="strategy-section">
+                <h3>Sorting Strategy</h3>
+                <div class="strategy-grid">
+                    <label class="strategy-card active" data-strategy="smart_balance">
+                        <input type="radio" name="strategy" value="smart_balance" checked>
+                        <div class="strategy-icon">⚖️</div>
+                        <div class="strategy-info">
+                            <span class="strategy-name">Smart Balance</span>
+                            <span class="strategy-desc">AI-powered balanced prioritization</span>
+                        </div>
+                        <div class="strategy-check">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20,6 9,17 4,12"/>
+                            </svg>
+                        </div>
+                    </label>
+                    <label class="strategy-card" data-strategy="fastest_wins">
+                        <input type="radio" name="strategy" value="fastest_wins">
+                        <div class="strategy-icon">⚡</div>
+                        <div class="strategy-info">
+                            <span class="strategy-name">Fastest Wins</span>
+                            <span class="strategy-desc">Prioritize quick wins</span>
+                        </div>
+                        <div class="strategy-check">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20,6 9,17 4,12"/>
+                            </svg>
+                        </div>
+                    </label>
+                    <label class="strategy-card" data-strategy="high_impact">
+                        <input type="radio" name="strategy" value="high_impact">
+                        <div class="strategy-icon">🎯</div>
+                        <div class="strategy-info">
+                            <span class="strategy-name">High Impact</span>
+                            <span class="strategy-desc">Focus on importance</span>
+                        </div>
+                        <div class="strategy-check">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20,6 9,17 4,12"/>
+                            </svg>
+                        </div>
+                    </label>
+                    <label class="strategy-card" data-strategy="deadline_driven">
+                        <input type="radio" name="strategy" value="deadline_driven">
+                        <div class="strategy-icon">📅</div>
+                        <div class="strategy-info">
+                            <span class="strategy-name">Deadline Driven</span>
+                            <span class="strategy-desc">Urgency is key</span>
+                        </div>
+                        <div class="strategy-check">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20,6 9,17 4,12"/>
+                            </svg>
+                        </div>
+                    </label>
+                </div>
+            </section>
+
+            <!-- Analyze Button -->
+            <div class="analyze-section">
+                <button class="btn btn-primary btn-analyze" id="analyze-btn">
+                    <span class="btn-text">Analyze Tasks</span>
+                    <span class="btn-loader">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+                        </svg>
+                    </span>
+                </button>
+            </div>
+
+            <!-- Results Section -->
+            <section class="results-section hidden" id="results-section">
+                <div class="results-header">
+                    <div class="results-title">
+                        <h2>Analysis Results</h2>
+                        <span class="results-meta" id="results-meta"></span>
+                    </div>
+                    <div class="results-actions">
+                        <button class="btn btn-ghost" id="get-suggestions-btn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                                <path d="M2 17l10 5 10-5"/>
+                                <path d="M2 12l10 5 10-5"/>
+                            </svg>
+                            Get Top 3 Suggestions
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Priority Distribution -->
+                <div class="priority-distribution" id="priority-distribution">
+                    <div class="distribution-bar">
+                        <div class="bar-segment high" id="dist-high"></div>
+                        <div class="bar-segment medium" id="dist-medium"></div>
+                        <div class="bar-segment low" id="dist-low"></div>
+                    </div>
+                    <div class="distribution-legend">
+                        <span class="legend-item high"><span class="legend-dot"></span>High Priority: <strong id="count-high">0</strong></span>
+                        <span class="legend-item medium"><span class="legend-dot"></span>Medium: <strong id="count-medium">0</strong></span>
+                        <span class="legend-item low"><span class="legend-dot"></span>Low: <strong id="count-low">0</strong></span>
+                    </div>
+                </div>
+
+                <!-- Circular Dependencies Warning -->
+                <div class="circular-warning hidden" id="circular-warning">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+                        <line x1="12" y1="9" x2="12" y2="13"/>
+                        <line x1="12" y1="17" x2="12.01" y2="17"/>
+                    </svg>
+                    <div class="warning-content">
+                        <strong>Circular Dependencies Detected!</strong>
+                        <p id="circular-details"></p>
+                    </div>
+                </div>
+
+                <!-- Results Grid -->
+                <div class="results-grid" id="results-grid">
+                    <!-- Results will be injected here -->
+                </div>
+            </section>
+
+            <!-- Suggestions Modal -->
+            <div class="modal-overlay hidden" id="suggestions-modal">
+                <div class="modal">
+                    <div class="modal-header">
+                        <h2>🎯 Top 3 Recommendations</h2>
+                        <button class="modal-close" id="close-modal">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="18" y1="6" x2="6" y2="18"/>
+                                <line x1="6" y1="6" x2="18" y2="18"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="suggestions-content">
+                        <!-- Suggestions will be injected here -->
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Smart Task Analyzer • Built with Django & JavaScript • Internship Assignment 2025</p>
+        </footer>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
